@@ -1,0 +1,27 @@
+---
+title: "Дослідження соціальних мереж"
+author: "Роман Кириченко"
+date: '14 січня 2017 року'
+output: word_document
+---
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(scales)
+library(readr)
+library(tidyr)
+
+```
+
+all_user <- all_user %>% distinct(uid, .keep_all = TRUE)
+
+```{r}
+length(unique(all_user$uid))
+```
+
+Статевий розподіл
+
+```{r}
+table(all_user$sex)/
+```
