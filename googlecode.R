@@ -4,10 +4,10 @@ library(RJSONIO)
 library(dplyr)
 library(gtools)
 
-googlecode <- function(x){
+googlecode <- function(x,key){
   do.call("smartbind",lapply(x,function(y){
       y<-sub(" ", "", y)
-      request <- paste0("https://maps.googleapis.com/maps/api/geocode/json?address=", y, "&key=AIzaSyCvE3BJBByQ4VJDzQ7nOo85-dSjTRT66rM")
+      request <- paste0("https://maps.googleapis.com/maps/api/geocode/json?address=", y, "&key=", key)
       list <- tryCatch(fromJSON(getURL(request)), error=function(e) NULL)
       if(is.null(list)){
         a <- data_frame(
