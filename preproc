@@ -1,0 +1,24 @@
+basa_2014$adres <- gsub("\\вул..*","",basa_2014$Адреса)
+basa_2014$adres <- gsub("\\кв-л.*","",basa_2014$adres)
+basa_2014$adres <- gsub("\\кв..*","",basa_2014$adres)
+basa_2014$adres <- gsub("\\пров..*","",basa_2014$adres)
+basa_2014$adres <- gsub("\\1-й.*","",basa_2014$adres)
+
+basa_2014$adres <- gsub("\\проїзд.*","",basa_2014$adres)
+basa_2014$adres <- gsub("\\пл..*","",basa_2014$adres)
+basa_2014$adres <- gsub("\\пл..*","",basa_2014$adres)
+basa_2014$adres <- gsub("\\бульв..*","",basa_2014$adres)
+basa_2014$adres <- gsub("\\просп..*","",basa_2014$adres)
+basa_2014$adres <- gsub("\\мікрорайон.*","",basa_2014$adres)
+basa_2014$adres <-substr(basa_2014$adres,8,nchar(basa_2014$adres))
+
+naselennya <- basa_2014 %>% group_by(adres,city,country) %>% summarise(freq=n())
+
+cities <- read_csv("cities.csv")
+country <- read_csv("countries.csv")
+
+naselennya <- left_join(naselennya,cities,by=c("city"="cid"))
+naselennya <- left_join(naselennya,country,by=c("country"="cid"))
+naselennya$name %in% naselennya$adres
+
+by_country <- naselennya %>% group_by(name.y) %>% summarise(freq=sum(freq))
